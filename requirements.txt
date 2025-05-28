@@ -1,4 +1,0 @@
-pyodbc
-flask
-pyodbc
-dotenv
