@@ -19,7 +19,7 @@ stages:
             inputs:
               command: buildAndPush
               repository: $(DOCKER_USERNAME)/noventiq
-              Dockerfile: $(DOCKER_USERNAME)/noventiq
+              Dockerfile: ./dockerfile
               tags: latest
               containerRegistry: DockerHubConnection
 
@@ -44,8 +44,8 @@ stages:
                   inputs:
                     connectionType: 'Azure Resource Manager'
                     azureSubscription: 'Azure-Service-Connection'
-                    azureResourceGroup: 'Your-RG'
-                    kubernetesCluster: 'Your-AKS-Cluster'
+                    azureResourceGroup: 'noventiq-rg'
+                    kubernetesCluster: 'hello-aks'
                     namespace: '$(AKS_NAMESPACE)'
                     command: upgrade
                     chartType: filepath
@@ -55,7 +55,11 @@ stages:
                       image.repository=$(DOCKER_USERNAME)/noventiq
                       image.tag=$(IMAGE_TAG)
                       env.DB_PASSWORD=$(DB_PASSWORD)
+                      
+                - script: |
+                    curl http://$(EXTERNAL_IP)
+                  displayName: "Hello Check"
 
                 - script: |
-                    curl http://<your-app-loadbalancer>/health
+                    curl http://$(EXTERNAL_IP)/health
                   displayName: "Health Check"
