@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sql-init-script
+data:
+  restore.sql: |
+    RESTORE DATABASE Noventiq
+    FROM DISK = '/var/opt/mssql/backup/Noventiq.bak'
+    WITH MOVE 'Noventiq' TO '/var/opt/mssql/data/Noventiq.mdf',
+         MOVE 'Noventiq_log' TO '/var/opt/mssql/data/Noventiq_log.ldf',
+         REPLACE;

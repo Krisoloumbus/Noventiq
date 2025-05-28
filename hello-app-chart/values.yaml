@@ -1,0 +1,19 @@
+replicaCount: 1
+
+image:
+  repository: tuankhanhtran520/noventiq
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: LoadBalancer
+  port: 80
+  targetPort: 5000
+
+env:
+  DB_SERVER: internal-sql-ip
+  DB_PORT: "1433"
+  DB_USER: sa
+  DB_PASSWORD: ""
+
+resources: {}

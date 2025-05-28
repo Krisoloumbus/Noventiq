@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello-app
+  template:
+    metadata:
+      labels:
+        app: hello-app
+    spec:
+      containers:
+        - name: hello-app
+          image: tuankhanhtran520/noventiq:latest
+          ports:
+            - containerPort: 5000
+          env:
+            - name: DB_SERVER
+              value: internal-sql-ip
+            - name: DB_PORT
+              value: "1433"
+            - name: DB_USER
+              value: "sa"
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mssql-secret
+                  key: SA_PASSWORD
