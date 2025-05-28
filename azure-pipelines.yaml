@@ -19,8 +19,8 @@ stages:
             inputs:
               command: buildAndPush
               repository: $(DOCKER_USERNAME)/noventiq
-              Dockerfile: Hello\ World\ App/dockerfile
-              tags: $(IMAGE_TAG)
+              Dockerfile: $(DOCKER_USERNAME)/noventiq
+              tags: latest
               containerRegistry: DockerHubConnection
 
   - stage: Deploy
@@ -43,7 +43,7 @@ stages:
                 - task: HelmDeploy@0
                   inputs:
                     connectionType: 'Azure Resource Manager'
-                    azureSubscription: 'Your-Azure-Service-Connection'
+                    azureSubscription: 'Azure-Service-Connection'
                     azureResourceGroup: 'Your-RG'
                     kubernetesCluster: 'Your-AKS-Cluster'
                     namespace: '$(AKS_NAMESPACE)'
